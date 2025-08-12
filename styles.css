@@ -1,0 +1,107 @@
+/*
+  Battlefield 6 inspired theme: dark with neon highlights
+*/
+:root {
+  --bg-color: #0a0c14;
+  --card-bg: #151924;
+  --primary-color: #00b6e4;
+  --secondary-color: #4ed6ff;
+  --text-color: #e9eef5;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --border-radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+header {
+  background: radial-gradient(circle at center, #101421, #0a0c14);
+  padding: 2rem 0;
+  text-align: center;
+  border-bottom: 2px solid var(--primary-color);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+header h1 {
+  margin: 0;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 2.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary-color);
+}
+
+header .tagline {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: var(--secondary-color);
+}
+
+.container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.clips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.clip-card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 8px 24px var(--shadow-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.clip-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px var(--shadow-color);
+}
+
+.clip-card h2 {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  background: #0e1220;
+  border-bottom: 1px solid var(--primary-color);
+}
+
+.clip-content {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 0;
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+}
+
+footer code {
+  color: var(--primary-color);
+}
