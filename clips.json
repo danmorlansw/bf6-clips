@@ -1,22 +1,25 @@
 [
   {
-    "title": "BF6 Reveal Trailer",
     "type": "youtube",
-    "id": "LKh2u05zkBQ"
+    "id": "dQw4w9WgXcQ",
+    "title": "Epic BF6 fan-made montage",
+    "top": true
   },
   {
-    "title": "BF6 Gameplay Demo",
     "type": "youtube",
-    "id": "U1ANHOvPqdc"
+    "id": "3fumBcKC6RE",
+    "title": "Insane BF6 kill streak",
+    "top": true
   },
   {
-    "title": "NASA Perseverance test video (Example X embed)",
     "type": "x",
-    "url": "https://x.com/NASAPersevere/status/1394246547675340812"
+    "url": "https://twitter.com/Interior/status/463440424141459456",
+    "title": "Crazy moment captured on X",
+    "top": true
   },
   {
-    "title": "Awesome fan clip on Reddit",
     "type": "reddit",
-    "url": "https://www.reddit.com/r/battlefield/comments/8q0hl2/some_old_favorite_clip/"
+    "url": "https://www.reddit.com/r/gaming/comments/cq5y6a/this_is_why_i_love_battlefield/",
+    "title": "Hilarious Battlefield clip on Reddit"
   }
 ]

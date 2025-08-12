@@ -1,43 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BF6 Clips Hub</title>
-  <!-- Basic reset and font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Send referrer header for embeds -->
+  <meta name="referrer" content="origin">
+  <title>Battlefield 6 Clips Hub</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <div class="container">
-      <h1>Battlefield&nbsp;6 Clips</h1>
-      <p class="tagline">Curated community clips from YouTube, X, and Reddit</p>
-    </div>
+  <!-- Header -->
+  <header class="container">
+    <h1>Battlefield 6 Clips Hub</h1>
+    <p class="tagline">Curated community clips from YouTube, X, and Reddit</p>
   </header>
-  <main class="container">
-    <div id="clips" class="clips-grid"></div>
-  </main>
-  <footer>
-    <div class="container">
-      <p>
-        Want your clip featured? Update <code>clips.json</code> with your
-        entry or submit a pull request!
-      </p>
-    </div>
+
+  <!-- Filter bar -->
+  <section class="container filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="youtube">YouTube</button>
+    <button class="filter-btn" data-filter="x">X</button>
+    <button class="filter-btn" data-filter="reddit">Reddit</button>
+  </section>
+
+  <!-- Top highlights section -->
+  <section class="container highlights">
+    <h2>Top Highlights</h2>
+    <div id="highlights-grid" class="grid"></div>
+  </section>
+
+  <!-- All clips section -->
+  <section class="container all-clips">
+    <h2>All Clips</h2>
+    <div id="clips-grid" class="grid"></div>
+  </section>
+
+  <!-- Community section -->
+  <section class="container community-section">
+    <h2>Community Threads</h2>
+    <ul>
+      <li><a href="#">Tips for mastering vehicle combat in BF2042</a></li>
+      <li><a href="#">Share your most epic BF6 moments</a></li>
+      <li><a href="#">Favorite loadouts and why they rock</a></li>
+      <li><a href="#">BF6 vs BF2042: discuss the evolution</a></li>
+    </ul>
+  </section>
+
+  <!-- Footer -->
+  <footer class="container">
+    <p>Want your clip featured? Update <code>clips.json</code> or submit a pull request!</p>
   </footer>
-  <!-- Official embed scripts for X (Twitter) and Reddit -->
+
+  <!-- Official embed scripts for X and Reddit -->
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <script async src="https://embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
+  <!-- Custom script -->
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,74 +1,77 @@
-// Fetch clips data from clips.json and build the page
-document.addEventListener('DOMContentLoaded', () => {
-  fetch('clips.json')
-    .then((resp) => {
-      if (!resp.ok) throw new Error('Failed to load clips.json');
-      return resp.json();
-    })
-    .then((clips) => {
-      const container = document.getElementById('clips');
-      clips.forEach((clip) => {
-        const card = document.createElement('div');
-        card.className = 'clip-card';
-        // Title
-        const title = document.createElement('h2');
-        title.textContent = clip.title || '';
-        card.appendChild(title);
-        // Content wrapper
-        const content = document.createElement('div');
-        content.className = 'clip-content';
-        // Build embed based on type
-        if (clip.type === 'youtube') {
-          const iframe = document.createElement('iframe');
-          // If id provided, build embed url; else use url directly
-          const videoId = clip.id || (clip.url ? extractYouTubeID(clip.url) : '');
-          iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}`;
-          iframe.loading = 'lazy';
-          iframe.title = 'YouTube video player';
-          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-          iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-          iframe.allowFullscreen = true;
-          content.appendChild(iframe);
-        } else if (clip.type === 'x') {
-          // Build a blockquote for Twitter (X)
-          const blockquote = document.createElement('blockquote');
-          blockquote.className = 'twitter-tweet';
-          const anchor = document.createElement('a');
-          anchor.href = clip.url;
-          blockquote.appendChild(anchor);
-          content.appendChild(blockquote);
-        } else if (clip.type === 'reddit') {
-          const blockquote = document.createElement('blockquote');
-          blockquote.className = 'reddit-card';
-          const anchor = document.createElement('a');
-          anchor.href = clip.url;
-          anchor.textContent = clip.title || 'Reddit clip';
-          blockquote.appendChild(anchor);
-          content.appendChild(blockquote);
+document.addEventListener('DOMContentLoaded', async () => {
+  const clipsGrid = document.getElementById('clips-grid');
+  const highlightsGrid = document.getElementById('highlights-grid');
+  const buttons = document.querySelectorAll('.filter-btn');
+
+  try {
+    const response = await fetch('clips.json');
+    const clips = await response.json();
+
+    // Split into top highlights and rest
+    const topClips = clips.filter(c => c.top);
+    const restClips = clips.filter(c => !c.top);
+
+    renderClips(topClips, highlightsGrid);
+    renderClips(restClips, clipsGrid);
+
+    // Filter functionality
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelector('.filter-btn.active').classList.remove('active');
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        const cards = document.querySelectorAll('.clip-card');
+        cards.forEach(card => {
+          if (filter === 'all' || card.dataset.type === filter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        // Reload X embeds after filtering
+        if (typeof twttr !== 'undefined' && twttr.widgets) {
+          twttr.widgets.load();
         }
-        card.appendChild(content);
-        container.appendChild(card);
       });
-      // After cards added, instruct widgets to parse X embeds
-      if (window.twttr && window.twttr.widgets) {
-        window.twttr.widgets.load();
-      }
-    })
-    .catch((error) => {
-      console.error('Error loading clips:', error);
     });
+  } catch (error) {
+    console.error('Could not load clips.json', error);
+  }
 });
 
-// Utility to extract YouTube ID from a URL
-function extractYouTubeID(url) {
-  try {
-    const obj = new URL(url);
-    if (obj.hostname.includes('youtu.be')) {
-      return obj.pathname.slice(1);
+function renderClips(clips, container) {
+  clips.forEach(clip => {
+    const card = document.createElement('div');
+    card.className = 'clip-card';
+    card.dataset.type = clip.type;
+    const title = document.createElement('h3');
+    title.textContent = clip.title;
+    card.appendChild(title);
+
+    if (clip.type === 'youtube') {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${clip.id}`;
+      iframe.loading = 'lazy';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      card.appendChild(iframe);
+    } else if (clip.type === 'x') {
+      const blockquote = document.createElement('blockquote');
+      blockquote.className = 'twitter-tweet';
+      const anchor = document.createElement('a');
+      anchor.href = clip.url;
+      blockquote.appendChild(anchor);
+      card.appendChild(blockquote);
+    } else if (clip.type === 'reddit') {
+      const blockquote = document.createElement('blockquote');
+      blockquote.className = 'reddit-card';
+      const anchor = document.createElement('a');
+      anchor.href = clip.url;
+      anchor.textContent = clip.title;
+      blockquote.appendChild(anchor);
+      card.appendChild(blockquote);
     }
-    const params = obj.searchParams;
-    return params.get('v');
-  } catch (e) {
-    return '';
-  }
+
+    container.appendChild(card);
+  });
 }
